@@ -1,0 +1,38 @@
+<div>
+    <div id="game"></div>
+    <div id="panel">
+        <form name="myForm">
+            <label>
+                <input type="radio" ng-model="c.coordMode" value="offset">
+                Offset
+            </label><br />
+            <label>
+                <input type="radio" ng-model="c.coordMode" value="center">
+                Center
+            </label><br />
+            <label>
+                <input type="radio" ng-model="c.coordMode" value="hand1">
+                Hand1
+            </label><br />
+            <label>
+                <input type="radio" ng-model="c.coordMode" value="hand2">
+                Hand2
+            </label><br />
+            <label>
+                <input type="radio" ng-model="c.coordMode" value="muzzle">
+                Muzzle
+            </label><br />
+
+            <input type="file" id="files" name="files[]" multiple />
+        </form>
+        <button ng-click="c.save()">Save</button>
+        <!-- Trigger -->
+        <button id="copy" class="btn" data-clipboard-target="#foo">
+            Copy to Clipboard
+        </button>
+
+        <!-- Target -->
+        <textarea id="foo" ng-model="c.jsonText">
+
+    </div>
+</div>
