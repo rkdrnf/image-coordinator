@@ -51,7 +51,7 @@ export class ObjectManager {
 
     public getData() {
         return Array.from(this.map.keys()).map((k) => {
-            return Object.assign({ name: k }, this.map.get(k));
+            return Object.assign({ image: k }, this.map.get(k));
         });
     }
 }

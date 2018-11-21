@@ -91,6 +91,7 @@ export class Renderer {
 
             let p = obj[k];
             let g = new PIXI.Graphics();
+            g.lineStyle(0.2, 0xffffff)
             g.beginFill(color);
             g.moveTo(0, 0);
             g.lineTo(1, 0);

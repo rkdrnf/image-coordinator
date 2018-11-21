@@ -16,12 +16,13 @@ export class MainController implements ng.IController {
         this.coordinator.setMode(val);
     }
 
-    static $inject = ["renderer", "objectManager", "coordinator"];
+    static $inject = ["renderer", "objectManager", "coordinator", "$scope"];
 
     constructor(
         private renderer: Renderer,
         private objectManager: ObjectManager,
         private coordinator: Coordinator,
+        private $scope: ng.IScope
     ) {
 
     }
@@ -39,6 +40,31 @@ export class MainController implements ng.IController {
                 return document.getElementById("foo");
             }
         })
+
+        document.addEventListener("keydown", (e) => {
+            switch (e.code) {
+                case "Digit1":
+                    this.coordinator.setMode("offset");
+                    this.$scope.$apply();
+                    break;
+                case "Digit2":
+                    this.coordinator.setMode("center");
+                    this.$scope.$apply();
+                    break;
+                case "Digit3":
+                    this.coordinator.setMode("hand1");
+                    this.$scope.$apply();
+                    break;
+                case "Digit4":
+                    this.coordinator.setMode("hand2");
+                    this.$scope.$apply();
+                    break;
+                case "Digit5":
+                    this.coordinator.setMode("muzzle");
+                    this.$scope.$apply();
+                    break;
+            }
+        });
     }
 
     private onFileUpload(e: any) {
