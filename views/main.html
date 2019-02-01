@@ -3,6 +3,10 @@
     <div id="panel">
         <form name="myForm">
             <label>
+                <input type="file" id="dataFile" name="files[]" />
+                upload weapon shape
+            </label><br />
+            <label>
                 <input type="radio" ng-model="c.coordMode" value="offset">
                 Offset
             </label><br />
@@ -22,17 +26,11 @@
                 <input type="radio" ng-model="c.coordMode" value="muzzle">
                 Muzzle
             </label><br />
-
-            <input type="file" id="files" name="files[]" multiple />
+            <label>
+                <input type="radio" ng-model="c.coordMode" value="angle">
+                Angle
+            </label><br />
         </form>
         <button ng-click="c.save()">Save</button>
-        <!-- Trigger -->
-        <button id="copy" class="btn" data-clipboard-target="#foo">
-            Copy to Clipboard
-        </button>
-
-        <!-- Target -->
-        <textarea id="foo" ng-model="c.jsonText">
-
     </div>
 </div>

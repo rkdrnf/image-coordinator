@@ -1,13 +1,15 @@
 import { Renderer } from "./renderer";
 import { ObjectManager } from "./ObjectManager";
 import { Coordinator } from "./Coordinator";
-import ClipboardJS from "clipboard";
+import { IShapeData } from "./ShapeData";
 
 
 export class MainController implements ng.IController {
 
-    private coords: any = {};
-    private jsonText = "";
+    private originalData: any;
+
+    private weapons: IShapeData[];
+
     public get coordMode(): string {
         return this.coordinator.getMode();
     }
@@ -30,16 +32,10 @@ export class MainController implements ng.IController {
     $onInit() {
 
         this.renderer.setup();
+        this.renderer.loadTexture();
 
-        let files = document.getElementById("files");
-
-        files.addEventListener("change", (e) => this.onFileUpload(e));
-
-        let button = new ClipboardJS("#copy", {
-            target: () => {
-                return document.getElementById("foo");
-            }
-        })
+        const dataFile = document.getElementById("dataFile");
+        dataFile.addEventListener("change", (e) => this.onDataFileUpload(e));
 
         document.addEventListener("keydown", (e) => {
             switch (e.code) {
@@ -63,47 +59,49 @@ export class MainController implements ng.IController {
                     this.coordinator.setMode("muzzle");
                     this.$scope.$apply();
                     break;
+                case "Digit6":
+                    this.coordinator.setMode("angle");
+                    this.$scope.$apply();
+                    break;
             }
         });
     }
 
-    private onFileUpload(e: any) {
-        var files = e.target.files; // FileList object
+    private onDataFileUpload(e: any) {
+        var f = e.target.files[0]; // FileList object
 
-        // Loop through the FileList and render image files as thumbnails.
-        for (var i = 0, f; f = files[i]; i++) {
+        var reader = new FileReader();
 
-            // Only process image files.
-            if (!f.type.match('image.*')) {
-                continue;
-            }
+        // Closure to capture the file information.
+        reader.onload = (ev: any) => {
+            const data = ev.target.result;
+            this.originalData = JSON.parse(data);
+            this.applyWeapons(this.originalData.weapons);
+            this.$scope.$apply();
+        }
 
-            var reader = new FileReader();
+        // Read in the image file as a data URL.
+        reader.readAsText(f);
+    }
 
-            let name = f.name;
-            if (this.objectManager.has(name)) {
-                continue;
-            }
+    private applyWeapons(weapons: IShapeData[]) {
+        this.weapons = weapons;
+        this.renderer.clear();
 
-            let index = this.objectManager.length();
-
-            this.objectManager.register(name);
-
-            // Closure to capture the file information.
-            reader.onload = (ev: any) => {
-                let data = ev.target.result;
-                this.renderer.draw(name, data, index);
-            }
-
-            // Read in the image file as a data URL.
-            reader.readAsDataURL(f);
+        for (let i = 0; i < this.weapons.length; i++) {
+            this.renderer.drawWeapon(this.weapons[i], i);
         }
     }
 
     public save() {
-        this.jsonText = JSON.stringify(this.objectManager.getData());
-    }
+        let json = JSON.stringify(this.originalData);
 
-    public copy() {
+        let encodedUri = "data:text/json;charset=utf-8," + encodeURIComponent(json);
+        let link = document.createElement("a");
+        link.setAttribute('href', encodedUri);
+        link.setAttribute("download", "shape.json");
+        document.body.appendChild(link); // Required for FF
+
+        link.click();
     }
 }
