@@ -150,7 +150,6 @@ export class WeaponElement {
 
         if (this.angleDragging) {
             const angle = Math.atan2(pos.y, pos.x) / Math.PI * 180;
-            console.log(pos);
 
             const result = Math.floor(angle / 15) * 15;
             this.weapon.rotation = result / 180 * Math.PI;

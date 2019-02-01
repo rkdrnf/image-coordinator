@@ -8,8 +8,8 @@ export class Renderer {
 
     private app: PIXI.Application;
 
-    readonly scale: number = 8;
-    readonly gridSize: number = 30;
+    readonly scale: number = 4;
+    readonly gridSize: number = 55;
 
     private countInRow: number;
 
@@ -33,7 +33,7 @@ export class Renderer {
             resolution: 1,
             roundPixels: true,
             width: window.innerWidth - 250,
-            height: 1400,
+            height: 2200,
         });
 
         //Add the canvas that Pixi automatically created for you to the HTML document
