@@ -73,7 +73,7 @@ export class WeaponElement {
         text.scale.set(1 / 8);
         text.position.set(0, -14);
 
-        let playerImage = new PIXI.Sprite(PIXI.utils.TextureCache["idle_s_001.png"]);
+        let playerImage = new PIXI.Sprite(PIXI.utils.TextureCache["player/idle/right/i1.png"]);
         playerImage.anchor.set(0.5);
 
         let cont = new PIXI.Container();
