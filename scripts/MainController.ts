@@ -88,6 +88,7 @@ export class MainController implements ng.IController {
         this.weapons = weapons;
         this.renderer.clear();
 
+        console.log(this.weapons);
         for (let i = 0; i < this.weapons.length; i++) {
             this.renderer.drawWeapon(this.weapons[i], i);
         }
